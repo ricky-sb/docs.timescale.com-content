@@ -1,18 +1,29 @@
 # TimescaleDB Release Notes & Future Plans
 
-Interested in what's coming down the pipeline? See our 
+Interested in what's coming down the pipeline? Review our 
 Future Plans section. Interested in learning more about
-what's already available? Jump below to see what's
+what's already available? Jump down below to see what's
 been released. 
 
 ## Future Plans
 
-As a reminder, TimescaleDB is open-source and you can
+As a reminder, TimescaleDB is open-source and you 
 can view active developments on GitHub at any time. 
 
 ### What to expect from our next release
 
-PLACEHOLDER
+The next release of TimescaleDB will include basic 
+[PostgreSQL 12](https://www.postgresql.org/about/news/1976/) 
+support and Union Views. 
+
+With Union Views, users will be able to query data 
+from a continuous aggregate (which will contain data 
+based on when the last update job ran). This feature 
+will fetch the most updated data from the underlying 
+table in order to satisfy your query. 
+
+We expect to release these capabilities late in Q1
+of 2020.
 
 ### Coming down the pipeline
 
@@ -54,6 +65,9 @@ timescaledb.ignore_invalidation_older_than = '1 month', then any modifications
 for data older than 1 month from the current timestamp at modification time may
 not cause continuous aggregate to be updated. This limits the amount of work
 that a backfill can trigger. By default, all invalidations are processed.
+
+For more information on this release, read the [announcement blog](https://blog.timescale.com/blog/timescaledb-1-6-data-retention-policies-for-continuous-aggregates/)
+and [blog on downsampling](https://blog.timescale.com/blog/how-to-proactively-manage-long-term-data-storage-with-downsampling/). 
 
 **Major Features**
 * #1589 Allow drop_chunks while keeping continuous aggregates
@@ -121,8 +135,8 @@ parallel query coordination to the ChunkAppend node.
 Previously ChunkAppend would rely on parallel coordination in the
 underlying scans for parallel plans.
 
-More information can be found on [our blog](https://blog.timescale.com/blog/building-columnar-compression-in-a-row-oriented-database)
-or in this [tutorial](https://docs.timescale.com/latest/tutorials/compression-tutorial)
+For more information on this release, read the [announcement blog](https://blog.timescale.com/blog/building-columnar-compression-in-a-row-oriented-database), this [tutorial](https://docs.timescale.com/latest/tutorials/compression-tutorial), 
+and the [blog on data tiering](https://blog.timescale.com/blog/optimize-your-storage-costs-with-timescaledbs-data-tiering-functionality/).
 
 **For this release only**, you will need to restart the database before running
 `ALTER EXTENSION`
@@ -223,6 +237,10 @@ execution time constraint exclusion and is also used for ordered
 append. Ordered append no longer requires a LIMIT clause and now
 supports space partitioning and ordering by time_bucket.
 
+For more information on this release, read the [announcement blog](https://blog.timescale.com/blog/timescaledb-1-4-introduces-better-performance-for-time-series-analytics/), [blog on implementing
+constraint exclusion](https://blog.timescale.com/blog/implementing-constraint-exclusion-for-faster-query-performance/),
+and [blog on using OrderedAppend](https://blog.timescale.com/blog/ordered-append-an-optimization-for-range-partitioning/).
+
 **Major features**
 * #1270 Use ChunkAppend to replace Append nodes
 * #1257 Support for multiple continuous aggregates
@@ -270,7 +288,7 @@ We deem it low-to-moderate priority for upgrading.
 
 In particular, the fixes contained in this maintenance release do not address any
 security vulnerabilities, while the only one affecting system stability is related
-to TimescaleDB running on PostgreSQL 11.  More details below.
+to TimescaleDB running on PostgreSQL 11. More details below.
 
 **Bugfixes**
 * #1220 Fix detecting JOINs for continuous aggs
@@ -313,8 +331,9 @@ high-write amplification associated with trigger-based approaches. Instead,
 we use invalidation techniques to track what data has changed, and then correct
 the materialized aggregate the next time that the automated process executes.
 
-More information can be found on [our docs overview](http://docs.timescale.com/using-timescaledb/continuous-aggregates)
-or in this [tutorial](http://docs.timescale.com/tutorials/continuous-aggs-tutorial).
+For more information on this release, read our [blog on continuous aggregates](https://blog.timescale.com/blog/continuous-aggregates-faster-queries-with-automatically-maintained-materialized-views/), 
+[our docs overview](http://docs.timescale.com/using-timescaledb/continuous-aggregates),
+and visit this [tutorial](http://docs.timescale.com/tutorials/continuous-aggs-tutorial).
 
 **Major Features**
 * #1184 Add continuous aggregate functionality
@@ -433,6 +452,8 @@ This release adds code under a new license, LICENSE_TIMESCALE. This code can be 
 * Dimtrj and Asbjørn D., on slack, for creating a reproducible testcase for an UPSERT bug
 * @skebanga for reporting a loader bug
 
+For more information on this release, read the [blog announcement](https://blog.timescale.com/blog/timescaledb-1-2-analytical-functions-advanced-data-lifecycle-management-improved-performance/) and
+[blog on using `time_bucket_gapfill`, `interpolate`, and `locf`](https://blog.timescale.com/blog/sql-functions-for-time-series-analysis/).
 
 ### 1.1.1 (2018-12-20)
 
@@ -507,6 +528,8 @@ To all the external contributors who helped us debug the release candidates, as 
 **Potential breaking changes**
 * To better align with the ISO standard so that time bucketing starts each week by default on a Monday (rather than Saturday), the `time_bucket` epoch/origin has been changed from January 1, 2000 to January 3, 2000.  The function now includes an `origin` parameter that can be used to adjust this.
 * Error codes are now prefixed with `TS` instead of the prior `IO` prefix. If you were checking for these error codes by name, please update your code.
+
+For more information on this release, read the [blog announcement](https://blog.timescale.com/blog/1-0-enterprise-production-ready-time-series-database-open-source-d32395a10cbf/).
 
 
 **For releases prior to 1.0, please visit the [changelog](https://github.com/timescale/timescaledb/blob/master/CHANGELOG.md).**
